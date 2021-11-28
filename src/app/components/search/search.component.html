@@ -1,0 +1,60 @@
+<div class="container m-3">
+    <h1>Mixology</h1>
+    <h5>Total Database: {{ cocktails.length }}</h5>
+    <div class="wrap">
+      <div class="search stuff">
+        <input type="text" name="searchTerm" [(ngModel)]="term" class="searchTerm" placeholder="Enter the name of a cocktail or ingredients, separated by a commas">
+      </div>
+  
+      <div  *ngIf="term" class="search-results">
+            <div *ngFor="let cocktail of cocktails | searchFilter:term">
+                <p class="cocktail" (click)="router.navigate(['/cocktails', cocktail.id])">
+                    {{ cocktail.name }}
+                </p>
+                <!-- BEGIN preview  -->
+                    <div class="preview preview-container">
+                        <h1
+                            [innerHTML]="withHighlightedTerms(term, cocktail.name)"
+                        >
+                        {{ cocktail.name }}
+                        </h1>
+                            <div class=img-container>
+                                <img src="assets/cocktail_image.jpg" alt="whatev" width="200" />
+                            </div>
+                            <div class="prev-flex">
+                                    <h2>Ingredients</h2>       
+                                    <div class="preview-contents"
+                                        *ngFor="let item of cocktail.ingredients"
+                                    >
+                                        <ul>
+                                            <div *ngFor="let ingredient of item | keyvalue">
+                                                <li>{{ingredient.value}} 
+                                                    <span
+                                                        [innerHTML]="highlightedIngredients(term, ingredient.key)"
+                                                    > {{ingredient.key}} 
+                                                    </span> 
+                                                </li>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                    <h2>Instructions</h2>
+                                    <div>
+                                        <ol>
+                                            <div *ngFor="let instruction of cocktail.instructions | keyvalue">
+                                                <li> 
+                                                    <span 
+                                                        [innerHTML]="highlightedInstructions(term, instruction.value)"
+                                                    >   
+                                                    </span> 
+                                                </li>
+                                            </div>      
+                                        </ol>
+                                    </div>
+                            </div>
+                    </div>
+                <!-- END preview  -->
+            </div>
+    </div>
+
+    </div>
+  </div>

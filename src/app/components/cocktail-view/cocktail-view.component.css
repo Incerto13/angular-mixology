@@ -1,0 +1,8 @@
+.container {
+    display: flex;
+    padding: 30px;
+}
+
+.img-container {
+    padding: 20px;
+}
